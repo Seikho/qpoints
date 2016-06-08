@@ -45,7 +45,7 @@ function ip(req) {
 function limit(address) {
     // REQ_LIMIT requests per RESET_MS milliseconds
     const REQ_LIMIT = 50;
-    const RESET_MS = 500;
+    const RESET_MS = 1000;
     if (limitCache[address] === undefined) {
         limitCache[address] = 0;
         setTimeout(() => delete limitCache[address], RESET_MS);
