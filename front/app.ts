@@ -9,6 +9,13 @@ class AppModel {
 
     users = ko.observableArray<UserModel>([]);
 
+    sortDescending = ko.observable(false);
+    sortUsers = () => {
+        this.sortDescending(!this.sortDescending());
+        const factor = this.sortDescending() ? 1 : -1;
+        this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor))
+    }
+
     getUser = (name: string) => this.users()
         .filter(user => user.name() === name)[0];
 

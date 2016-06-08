@@ -2,6 +2,12 @@
 class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
+        this.sortDescending = ko.observable(false);
+        this.sortUsers = () => {
+            this.sortDescending(!this.sortDescending());
+            const factor = this.sortDescending() ? 1 : -1;
+            this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor));
+        };
         this.getUser = (name) => this.users()
             .filter(user => user.name() === name)[0];
         this.loadUsers = () => {
