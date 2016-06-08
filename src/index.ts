@@ -8,7 +8,9 @@ const server = express();
 server.use(express.static('front'));
 
 server.get('/upvote/:name', (req, res) => {
-    points.upvote(req.params.name);
+    if (req.params.name != "Lamia") {
+        points.upvote(req.params.name);
+    }
     res.json(points.getUser(req.params.name));
 });
 
