@@ -24,8 +24,8 @@
                 <td><span data-bind="text: name"></td>
                 <td><span data-bind="text: points"></td>
                 <td>
-                    <button data-bind="click: function() { $parent.upvote(name()) }">+</button>
-                    <button data-bind="click: function() { $parent.downvote(name()) }">-</button>
+                    <button data-bind="click: upvote, enable: isEnabled">+</button>
+                    <button data-bind="click: downvote, enable: isEnabled">-</button>
                 </td>
         </tbody>
     </table>

@@ -2,18 +2,6 @@
 class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
-        this.upvote = (name) => {
-            const user = this.getUser(name);
-            fetch(`/upvote/${name}`)
-                .then(res => res.json())
-                .then(res => user.points(res.points));
-        };
-        this.downvote = (name) => {
-            const user = this.getUser(name);
-            fetch(`/downvote/${name}`)
-                .then(res => res.json())
-                .then(res => user.points(res.points));
-        };
         this.getUser = (name) => this.users()
             .filter(user => user.name() === name)[0];
         this.loadUsers = () => {
@@ -51,6 +39,23 @@ class UserModel {
     constructor(user) {
         this.name = ko.observable('');
         this.points = ko.observable(0);
+        this.isEnabled = ko.observable(true);
+        this.upvote = () => {
+            this.isEnabled(false);
+            fetch(`/upvote/${this.name()}`)
+                .then(res => res.json())
+                .then(res => this.points(res.points))
+                .then(() => this.isEnabled(true))
+                .catch(() => this.isEnabled(true));
+        };
+        this.downvote = () => {
+            this.isEnabled(false);
+            fetch(`/downvote/${this.name()}`)
+                .then(res => res.json())
+                .then(res => this.points(res.points))
+                .then(() => this.isEnabled(true))
+                .catch(() => this.isEnabled(true));
+        };
         this.name(user.name);
         this.points(user.points);
     }

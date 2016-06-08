@@ -9,20 +9,6 @@ class AppModel {
 
     users = ko.observableArray<UserModel>([]);
 
-    upvote = (name: string) => {
-        const user = this.getUser(name);
-        fetch(`/upvote/${name}`)
-            .then(res => res.json())
-            .then(res => user.points(res.points));
-    }
-
-    downvote = (name: string) => {
-        const user = this.getUser(name);
-        fetch(`/downvote/${name}`)
-            .then(res => res.json())
-            .then(res => user.points(res.points));
-    }
-
     getUser = (name: string) => this.users()
         .filter(user => user.name() === name)[0];
 
@@ -66,6 +52,25 @@ class UserModel {
 
     name = ko.observable('');
     points = ko.observable(0);
+    isEnabled = ko.observable(true);
+
+    upvote = () => {
+        this.isEnabled(false);
+        fetch(`/upvote/${this.name()}`)
+            .then(res => res.json())
+            .then(res => this.points(res.points))
+            .then(() => this.isEnabled(true))
+            .catch(() => this.isEnabled(true));
+    }
+
+    downvote = () => {
+        this.isEnabled(false);
+        fetch(`/downvote/${this.name()}`)
+            .then(res => res.json())
+            .then(res => this.points(res.points))
+            .then(() => this.isEnabled(true))
+            .catch(() => this.isEnabled(true));
+    }
 }
 
 ko.applyBindings(new AppModel());
