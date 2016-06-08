@@ -37,11 +37,11 @@ class AppModel {
             fetch(`/adduser/${newName}`).then(() => this.loadUsers());
         };
         this.poll = () => {
-            fetch('/poll')
+            setTimeout(() => fetch('/poll')
                 .then(res => res.json())
                 .then(this.parseUsers)
                 .then(() => this.poll())
-                .catch(() => setTimeout(() => this.poll(), 10000));
+                .catch(() => setTimeout(() => this.poll(), 10000)), 500);
         };
         this.loadUsers();
         this.poll();
