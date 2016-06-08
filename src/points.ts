@@ -1,3 +1,7 @@
+import * as events from 'events';
+
+export const emitter = new events.EventEmitter();
+
 export interface User {
     name: string;
     points: number;
@@ -10,6 +14,7 @@ export function upvote(name: string) {
     const user = getUser(name);
 
     user.points++;
+    emitter.emit('users', getUsers());
     return user;
 }
 
@@ -18,6 +23,7 @@ export function downvote(name: string) {
     const user = getUser(name);
 
     user.points--;
+    emitter.emit('users', getUsers());
     return user;
 }
 
@@ -42,6 +48,8 @@ export function addUser(name: string) {
         name,
         points: 0
     }
+
+    emitter.emit('users', getUsers());
 }
 
 export function getUser(name: string) {

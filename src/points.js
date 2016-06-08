@@ -1,9 +1,12 @@
 "use strict";
+const events = require('events');
+exports.emitter = new events.EventEmitter();
 const userStore = {};
 function upvote(name) {
     addUser(name);
     const user = getUser(name);
     user.points++;
+    exports.emitter.emit('users', getUsers());
     return user;
 }
 exports.upvote = upvote;
@@ -11,6 +14,7 @@ function downvote(name) {
     addUser(name);
     const user = getUser(name);
     user.points--;
+    exports.emitter.emit('users', getUsers());
     return user;
 }
 exports.downvote = downvote;
@@ -33,6 +37,7 @@ function addUser(name) {
         name,
         points: 0
     };
+    exports.emitter.emit('users', getUsers());
 }
 exports.addUser = addUser;
 function getUser(name) {

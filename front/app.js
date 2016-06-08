@@ -19,14 +19,16 @@ class AppModel {
         this.loadUsers = () => {
             fetch('/users')
                 .then(res => res.json())
-                .then(res => {
-                const names = Object.keys(res);
-                if (names.length === 0)
-                    return;
-                this.users.removeAll();
-                const users = names.map(user => new UserModel(res[user]));
-                this.users(users);
-            });
+                .then(this.parseUsers);
+        };
+        this.parseUsers = (userList) => {
+            const names = Object.keys(userList);
+            if (names.length === 0)
+                return;
+            this.users.removeAll();
+            const users = names.map(user => new UserModel(userList[user]));
+            this.users(users);
+            return true;
         };
         this.addUser = () => {
             const newName = window.prompt('New user name?');
@@ -34,7 +36,15 @@ class AppModel {
                 return;
             fetch(`/adduser/${newName}`).then(() => this.loadUsers());
         };
+        this.poll = () => {
+            fetch('/poll')
+                .then(res => res.json())
+                .then(this.parseUsers)
+                .then(() => this.poll())
+                .catch(() => setTimeout(() => this.poll(), 10000));
+        };
         this.loadUsers();
+        this.poll();
     }
 }
 class UserModel {

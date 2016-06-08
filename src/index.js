@@ -18,5 +18,8 @@ server.get('/adduser/:name', (req, res) => {
 server.get('/users', (req, res) => {
     res.json(points.getUsers());
 });
+server.get('/poll', (req, res) => {
+    points.emitter.once('users', users => res.json(users));
+});
 server.listen(1716, () => console.log('Listening on port 1716'));
 //# sourceMappingURL=index.js.map

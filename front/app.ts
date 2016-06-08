@@ -4,10 +4,10 @@ import {User} from "../src/points";
 class AppModel {
     constructor() {
         this.loadUsers();
+        this.poll();
     }
 
     users = ko.observableArray<UserModel>([]);
-
 
     upvote = (name: string) => {
         const user = this.getUser(name);
@@ -30,20 +30,31 @@ class AppModel {
     loadUsers = () => {
         fetch('/users')
             .then(res => res.json())
-            .then(res => {
-                const names = Object.keys(res);
-                if (names.length === 0) return;
+            .then(this.parseUsers);
+    }
 
-                this.users.removeAll();
-                const users = names.map(user => new UserModel(res[user]));
-                this.users(users);
-            });
+    parseUsers = (userList: any) => {
+        const names = Object.keys(userList);
+        if (names.length === 0) return;
+
+        this.users.removeAll();
+        const users = names.map(user => new UserModel(userList[user]));
+        this.users(users);
+        return true;
     }
 
     addUser = () => {
         const newName = window.prompt('New user name?');
         if (!newName) return;
         fetch(`/adduser/${newName}`).then(() => this.loadUsers());
+    }
+
+    poll = () => {
+        fetch('/poll')
+            .then(res => res.json())
+            .then(this.parseUsers)
+            .then(() => this.poll())
+            .catch(() => setTimeout(() => this.poll(), 10000));
     }
 }
 
