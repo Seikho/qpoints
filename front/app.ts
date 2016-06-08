@@ -51,12 +51,11 @@ class AppModel {
     }
 
     poll = () => {
-        setTimeout(() => fetch('/poll')
+        fetch('/poll')
             .then(res => res.json())
             .then(this.parseUsers)
             .then(() => this.poll())
-            .catch(() => setTimeout(() => this.poll(), 10000)),
-            250);
+            .catch(() => setTimeout(() => this.poll(), 10000));
     }
 }
 
