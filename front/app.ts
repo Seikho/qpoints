@@ -34,7 +34,7 @@ class AppModel {
             .then(() => this.pingTime(new Date().valueOf() - start));
     }
 
-    parseUsers = (userList: any) => {
+    parseUsers = (userList: any): any => {
         const names = Object.keys(userList);
         if (names.length === 0) return;
 
@@ -51,11 +51,12 @@ class AppModel {
     }
 
     poll = () => {
-        fetch('/poll')
+        setTimeout(() => fetch('/poll')
             .then(res => res.json())
             .then(this.parseUsers)
             .then(() => this.poll())
-            .catch(() => setTimeout(() => this.poll(), 10000));
+            .catch(() => setTimeout(() => this.poll(), 10000)),
+            250);
     }
 }
 
