@@ -20,7 +20,7 @@ server.get('/users', (req, res) => {
     res.json(points.getUsers());
 });
 server.get('/poll', (req, res) => {
-    points.emitter.once('users', users => res.json(users));
+    points.emitter.once('users', users => setTimeout(() => res.json(users), 250));
 });
 server.get('/ping', (req, res) => res.json({ ok: true }));
 server.listen(1716, () => console.log('Listening on port 1716'));
