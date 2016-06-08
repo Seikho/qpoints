@@ -2,6 +2,7 @@ import * as events from 'events';
 import {readBackup} from './backup';
 
 export const emitter = new events.EventEmitter();
+emitter.setMaxListeners(0);
 
 export interface User {
     name: string;

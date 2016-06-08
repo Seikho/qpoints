@@ -2,6 +2,7 @@
 const events = require('events');
 const backup_1 = require('./backup');
 exports.emitter = new events.EventEmitter();
+exports.emitter.setMaxListeners(0);
 const userStore = {};
 function upvote(name) {
     addUser(name);
