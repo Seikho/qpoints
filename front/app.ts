@@ -1,4 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
 import {User} from "../src/points";
 
 class AppModel {
