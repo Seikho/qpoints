@@ -15,6 +15,12 @@ class AppModel {
                 .then(res => res.json())
                 .then(this.parseUsers);
         };
+        this.pingTime = ko.observable(-1);
+        this.ping = () => {
+            const start = new Date().valueOf();
+            fetch('/ping')
+                .then(() => this.pingTime(new Date().valueOf() - start));
+        };
         this.parseUsers = (userList) => {
             const names = Object.keys(userList);
             if (names.length === 0)
@@ -39,6 +45,8 @@ class AppModel {
         };
         this.loadUsers();
         this.poll();
+        setInterval(() => this.ping(), 20000);
+        this.ping();
     }
 }
 class UserModel {

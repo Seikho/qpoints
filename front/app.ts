@@ -4,6 +4,8 @@ class AppModel {
     constructor() {
         this.loadUsers();
         this.poll();
+        setInterval(() => this.ping(), 20000);
+        this.ping();
     }
 
     users = ko.observableArray<UserModel>([]);
@@ -23,6 +25,13 @@ class AppModel {
         fetch('/users')
             .then(res => res.json())
             .then(this.parseUsers);
+    }
+
+    pingTime = ko.observable(-1);
+    ping = () => {
+        const start = new Date().valueOf();
+        fetch('/ping')
+            .then(() => this.pingTime(new Date().valueOf() - start));
     }
 
     parseUsers = (userList: any) => {

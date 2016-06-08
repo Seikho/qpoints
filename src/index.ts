@@ -30,6 +30,8 @@ server.get('/poll', (req, res) => {
     points.emitter.once('users', users => res.json(users));
 });
 
+server.get('/ping', (req, res) => res.json({ ok: true }));
+
 server.listen(1716, () => console.log('Listening on port 1716'));
 
 setInterval(() => backup(), 60000);
