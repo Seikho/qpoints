@@ -34,7 +34,7 @@ server.get('/users', (req, res) => {
     res.json(points.getUsers())
 });
 
-server.get('/poll', (req, res) => {
+server.get('/poll', brute.prevent, (req, res) => {
     points.emitter.once('users', users => setTimeout(() => res.json(users), 250));
 });
 
