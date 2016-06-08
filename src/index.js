@@ -1,6 +1,7 @@
 "use strict";
 const express = require('express');
 const points = require('./points');
+const backup_1 = require('./backup');
 const server = express();
 server.use(express.static('front'));
 server.get('/upvote/:name', (req, res) => {
@@ -22,4 +23,6 @@ server.get('/poll', (req, res) => {
     points.emitter.once('users', users => res.json(users));
 });
 server.listen(1716, () => console.log('Listening on port 1716'));
+setInterval(() => backup_1.default(), 60000);
+points.loadFromBackup();
 //# sourceMappingURL=index.js.map

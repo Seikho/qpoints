@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as points from './points';
+import backup from './backup';
 
 const server = express();
 
@@ -30,3 +31,7 @@ server.get('/poll', (req, res) => {
 });
 
 server.listen(1716, () => console.log('Listening on port 1716'));
+
+setInterval(() => backup(), 60000);
+
+points.loadFromBackup();

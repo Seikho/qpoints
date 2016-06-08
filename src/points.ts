@@ -1,4 +1,5 @@
 import * as events from 'events';
+import {readBackup} from './backup';
 
 export const emitter = new events.EventEmitter();
 
@@ -57,3 +58,13 @@ export function getUser(name: string) {
     return userStore[lowerName];
 }
 
+export function loadFromBackup() {
+    const existingUsers = Object.keys(userStore);
+    if (existingUsers.length > 0) {
+        existingUsers.forEach(user => delete userStore[user]);
+    }
+
+    const users = readBackup();
+    Object.keys(users)
+        .forEach(user => userStore[user] = users[user]);
+}

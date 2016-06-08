@@ -1,5 +1,6 @@
 "use strict";
 const events = require('events');
+const backup_1 = require('./backup');
 exports.emitter = new events.EventEmitter();
 const userStore = {};
 function upvote(name) {
@@ -45,4 +46,14 @@ function getUser(name) {
     return userStore[lowerName];
 }
 exports.getUser = getUser;
+function loadFromBackup() {
+    const existingUsers = Object.keys(userStore);
+    if (existingUsers.length > 0) {
+        existingUsers.forEach(user => delete userStore[user]);
+    }
+    const users = backup_1.readBackup();
+    Object.keys(users)
+        .forEach(user => userStore[user] = users[user]);
+}
+exports.loadFromBackup = loadFromBackup;
 //# sourceMappingURL=points.js.map
