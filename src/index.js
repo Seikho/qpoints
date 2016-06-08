@@ -52,7 +52,6 @@ function limit(address) {
     }
     limitCache[address]++;
     const canRequest = limitCache[address] < REQ_LIMIT;
-    console.log(limitCache[address], canRequest);
     return canRequest;
 }
 function decrease(address) {
