@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Real points</title>
+</head>
+
+<body>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Points</th>
+                <th>
+                    <button data-bind="click: addUser">+ User</button>
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody data-bind="foreach: users">
+            <tr>
+                <td><span data-bind="text: name"></td>
+                <td><span data-bind="text: points"></td>
+                <td>
+                    <button data-bind="click: function() { $parent.upvote(name()) }">+</button>
+                    <button data-bind="click: function() { $parent.downvote(name()) }">-</button>
+                </td>
+        </tbody>
+    </table>
+</body>
+
+<script src="/knockout.js"></script>
+<script src="/app.js"></script>
+
+</html>
