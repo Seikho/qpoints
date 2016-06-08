@@ -7,7 +7,8 @@ const server = express();
 
 const store = new Brute.MemoryStore();
 const brute = new Brute(store, {
-    freeRetries: 25, 
+    freeRetries: 25,
+    proxyDepth: 1 
 });
 
 const limitCache: { [address: string]: number } = {};

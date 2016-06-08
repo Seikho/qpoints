@@ -7,6 +7,7 @@ const server = express();
 const store = new Brute.MemoryStore();
 const brute = new Brute(store, {
     freeRetries: 25,
+    proxyDepth: 1
 });
 const limitCache = {};
 server.use(express.static('front'));
