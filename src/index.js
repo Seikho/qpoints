@@ -2,24 +2,18 @@
 const express = require('express');
 const points = require('./points');
 const backup_1 = require('./backup');
-const Brute = require('express-brute');
 const server = express();
-const store = new Brute.MemoryStore();
-const brute = new Brute(store, {
-    freeRetries: 25,
-    proxyDepth: 1
-});
 const limitCache = {};
 server.use(express.static('front'));
-server.get('/upvote/:name', brute.prevent, (req, res) => {
+server.get('/upvote/:name', (req, res) => {
     points.upvote(req.params.name);
     res.json(points.getUser(req.params.name));
 });
-server.get('/downvote/:name', brute.prevent, (req, res) => {
+server.get('/downvote/:name', (req, res) => {
     points.downvote(req.params.name);
     res.json(points.getUser(req.params.name));
 });
-server.get('/adduser/:name', brute.prevent, (req, res) => {
+server.get('/adduser/:name', (req, res) => {
     points.addUser(req.params.name);
     res.json(points.getUsers());
 });

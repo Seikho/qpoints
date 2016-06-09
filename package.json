@@ -11,8 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.13.4",
-    "express-brute": "^0.6.0"
+    "express": "^4.13.4"
   },
   "devDependencies": {
     "typescript": "^1.9.0-dev.20160607-1.0"
