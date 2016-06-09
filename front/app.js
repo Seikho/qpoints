@@ -2,10 +2,13 @@
 class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
-        this.sortDescending = ko.observable(false);
+        this.sortDirection = ko.observable(Sort.Unsorted);
         this.sortUsers = () => {
-            this.sortDescending(!this.sortDescending());
-            const factor = this.sortDescending() ? 1 : -1;
+            const sort = this.sortDirection();
+            if (sort === Sort.Unsorted)
+                return;
+            this.sortDirection(sort === Sort.Ascending ? Sort.Descending : Sort.Ascending);
+            const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
             this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor));
         };
         this.getUser = (name) => this.users()
@@ -28,6 +31,7 @@ class AppModel {
             this.users.removeAll();
             const users = names.map(user => new UserModel(userList[user]));
             this.users(users);
+            this.sortUsers();
             return true;
         };
         this.addUser = () => {
@@ -75,4 +79,10 @@ class UserModel {
     }
 }
 ko.applyBindings(new AppModel());
+var Sort;
+(function (Sort) {
+    Sort[Sort["Unsorted"] = 0] = "Unsorted";
+    Sort[Sort["Descending"] = 1] = "Descending";
+    Sort[Sort["Ascending"] = 2] = "Ascending";
+})(Sort || (Sort = {}));
 //# sourceMappingURL=app.js.map
