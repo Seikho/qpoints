@@ -9,11 +9,14 @@ class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
         this.sortDirection = ko.observable(Sort.Unsorted);
+        this.changeSort = () => {
+            this.sortDirection(this.sortDirection() === Sort.Ascending ? Sort.Descending : Sort.Ascending);
+            this.sortUsers();
+        };
         this.sortUsers = () => {
             const sort = this.sortDirection();
             if (sort === Sort.Unsorted)
                 return;
-            this.sortDirection(sort === Sort.Ascending ? Sort.Descending : Sort.Ascending);
             const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
             this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor));
         };
