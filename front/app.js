@@ -1,4 +1,10 @@
 "use strict";
+var Sort;
+(function (Sort) {
+    Sort[Sort["Unsorted"] = 0] = "Unsorted";
+    Sort[Sort["Descending"] = 1] = "Descending";
+    Sort[Sort["Ascending"] = 2] = "Ascending";
+})(Sort || (Sort = {}));
 class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
@@ -79,10 +85,4 @@ class UserModel {
     }
 }
 ko.applyBindings(new AppModel());
-var Sort;
-(function (Sort) {
-    Sort[Sort["Unsorted"] = 0] = "Unsorted";
-    Sort[Sort["Descending"] = 1] = "Descending";
-    Sort[Sort["Ascending"] = 2] = "Ascending";
-})(Sort || (Sort = {}));
 //# sourceMappingURL=app.js.map

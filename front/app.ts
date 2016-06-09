@@ -1,5 +1,11 @@
 import {User} from "../src/points";
 
+enum Sort {
+    Unsorted,
+    Descending,
+    Ascending
+}
+
 class AppModel {
     constructor() {
         this.loadUsers();
@@ -96,9 +102,3 @@ class UserModel {
 ko.applyBindings(new AppModel());
 
 declare function fetch(...args): any;
-
-enum Sort {
-    Unsorted,
-    Descending,
-    Ascending
-}
