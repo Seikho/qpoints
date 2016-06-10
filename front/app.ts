@@ -65,7 +65,7 @@ class AppModel {
 
         const users = this.users();
         names.forEach(name => {
-            const user = users.filter(user => name === user.name())[0];
+            const user = users.filter(user => userList[name].name === user.name())[0];
             if (!user) {
                 this.users.push(new UserModel(userList[name]));
                 return;
