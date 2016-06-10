@@ -9,6 +9,16 @@ class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
         this.hardmodeEnabled = ko.observable(false);
+        this.gethardmodeStyle = () => {
+            const element = document.getElementById('hardmode');
+            if (!this.hardmodeEnabled()) {
+                return '';
+            }
+            const left = Math.floor(window.innerWidth * Math.random()).toString();
+            const top = Math.floor(window.innerHeight * Math.random()).toString();
+            const position = 'absolute';
+            return `position: ${position}; top: ${top}px; left: ${left}px`;
+        };
         this.sortDescending = ko.observable(false);
         this.sortDirection = ko.observable(Sort.Unsorted);
         this.changeSort = () => {
@@ -25,7 +35,12 @@ class AppModel {
             const compareNames = (left, right) => left.name() > right.name() ? 1 : -1;
             this.users.sort((left, right) => right.points() === left.points() ? (compareNames(left, right) * factor) : (right.points() * factor) - (left.points() * factor));
         };
-        this.sortUsersRandomly = () => {
+        this.randomize = () => {
+            // this is not ideal, but neither is this entire application
+            document
+                .getElementById('hardmode')
+                .style
+                .cssText = this.gethardmodeStyle();
             if (!this.hardmodeEnabled())
                 return;
             const randomFactor = () => Math.random() > 0.5 ? 1 : -1;
@@ -84,7 +99,7 @@ class AppModel {
         this.poll();
         setInterval(() => this.ping(), 20000);
         this.ping();
-        setInterval(() => this.sortUsersRandomly(), 1000);
+        setInterval(() => this.randomize(), 1000);
     }
 }
 class UserModel {
