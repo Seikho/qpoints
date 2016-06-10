@@ -31,6 +31,7 @@ class AppModel {
     sortUsers = () => {
         const sort = this.sortDirection();
         if (sort === Sort.Unsorted) return;
+        if (this.hardmodeEnabled()) return;
 
         const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
         const compareNames = (left: UserModel, right: UserModel) => left.name() > right.name() ? 1 : -1;

@@ -19,6 +19,8 @@ class AppModel {
             const sort = this.sortDirection();
             if (sort === Sort.Unsorted)
                 return;
+            if (this.hardmodeEnabled())
+                return;
             const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
             const compareNames = (left, right) => left.name() > right.name() ? 1 : -1;
             this.users.sort((left, right) => right.points() === left.points() ? (compareNames(left, right) * factor) : (right.points() * factor) - (left.points() * factor));
