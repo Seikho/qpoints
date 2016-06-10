@@ -45,9 +45,21 @@ class AppModel {
             const names = Object.keys(userList);
             if (names.length === 0)
                 return;
-            this.users.removeAll();
-            const users = names.map(user => new UserModel(userList[user]));
-            this.users(users);
+            const users = this.users();
+            names.forEach(name => {
+                const user = users.filter(user => name === user.name())[0];
+                if (!user) {
+                    this.users.push(new UserModel(userList[name]));
+                    return;
+                }
+                user.points(userList[name].points);
+            });
+            users.forEach(user => {
+                const exists = names.some(name => name === user.name());
+                if (exists)
+                    return;
+                this.users.remove(user);
+            });
             this.sortUsers();
             return true;
         };
