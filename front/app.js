@@ -2,11 +2,18 @@
 class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
+        this.hardmodeEnabled = ko.observable(false);
         this.sortDescending = ko.observable(false);
         this.sortUsers = () => {
             this.sortDescending(!this.sortDescending());
             const factor = this.sortDescending() ? 1 : -1;
             this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor));
+        };
+        this.sortUsersRandomly = () => {
+            if (!this.hardmodeEnabled())
+                return;
+            const randomFactor = () => Math.random() > 0.5 ? 1 : -1;
+            this.users.sort((left, right) => randomFactor());
         };
         this.getUser = (name) => this.users()
             .filter(user => user.name() === name)[0];
@@ -47,6 +54,7 @@ class AppModel {
         this.poll();
         setInterval(() => this.ping(), 20000);
         this.ping();
+        setInterval(() => this.sortUsersRandomly(), 1000);
     }
 }
 class UserModel {

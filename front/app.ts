@@ -6,15 +6,25 @@ class AppModel {
         this.poll();
         setInterval(() => this.ping(), 20000);
         this.ping();
+
+        setInterval(() => this.sortUsersRandomly(), 1000);
     }
 
     users = ko.observableArray<UserModel>([]);
+
+    hardmodeEnabled = ko.observable(false);
 
     sortDescending = ko.observable(false);
     sortUsers = () => {
         this.sortDescending(!this.sortDescending());
         const factor = this.sortDescending() ? 1 : -1;
         this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor))
+    }
+    
+    sortUsersRandomly = () => {
+        if (!this.hardmodeEnabled()) return;
+        const randomFactor = () => Math.random() > 0.5 ? 1 : -1;
+        this.users.sort((left, right) => randomFactor())
     }
 
     getUser = (name: string) => this.users()
