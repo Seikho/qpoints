@@ -1,5 +1,11 @@
 import {User} from "../src/points";
 
+enum Sort {
+    Unsorted,
+    Descending,
+    Ascending
+}
+
 class AppModel {
     constructor() {
         this.loadUsers();
@@ -15,9 +21,18 @@ class AppModel {
     hardmodeEnabled = ko.observable(false);
 
     sortDescending = ko.observable(false);
+    sortDirection = ko.observable(Sort.Unsorted);
+
+    changeSort = () => {        
+        this.sortDirection(this.sortDirection() === Sort.Ascending ? Sort.Descending : Sort.Ascending);
+        this.sortUsers();
+    }
+
     sortUsers = () => {
-        this.sortDescending(!this.sortDescending());
-        const factor = this.sortDescending() ? 1 : -1;
+        const sort = this.sortDirection();
+        if (sort === Sort.Unsorted) return;
+
+        const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
         this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor))
     }
     
@@ -51,6 +66,7 @@ class AppModel {
         this.users.removeAll();
         const users = names.map(user => new UserModel(userList[user]));
         this.users(users);
+        this.sortUsers();
         return true;
     }
 

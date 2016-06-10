@@ -1,12 +1,25 @@
 "use strict";
+var Sort;
+(function (Sort) {
+    Sort[Sort["Unsorted"] = 0] = "Unsorted";
+    Sort[Sort["Descending"] = 1] = "Descending";
+    Sort[Sort["Ascending"] = 2] = "Ascending";
+})(Sort || (Sort = {}));
 class AppModel {
     constructor() {
         this.users = ko.observableArray([]);
         this.hardmodeEnabled = ko.observable(false);
         this.sortDescending = ko.observable(false);
+        this.sortDirection = ko.observable(Sort.Unsorted);
+        this.changeSort = () => {
+            this.sortDirection(this.sortDirection() === Sort.Ascending ? Sort.Descending : Sort.Ascending);
+            this.sortUsers();
+        };
         this.sortUsers = () => {
-            this.sortDescending(!this.sortDescending());
-            const factor = this.sortDescending() ? 1 : -1;
+            const sort = this.sortDirection();
+            if (sort === Sort.Unsorted)
+                return;
+            const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
             this.users.sort((left, right) => (right.points() * factor) - (left.points() * factor));
         };
         this.sortUsersRandomly = () => {
@@ -35,6 +48,7 @@ class AppModel {
             this.users.removeAll();
             const users = names.map(user => new UserModel(userList[user]));
             this.users(users);
+            this.sortUsers();
             return true;
         };
         this.addUser = () => {
