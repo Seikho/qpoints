@@ -63,9 +63,12 @@ class AppModel {
         const names = Object.keys(userList);
         if (names.length === 0) return;
 
+
         const users = this.users();
+        const findUser = (name: string) => users.filter(user => user.name() === userList[name].name)[0];
+
         names.forEach(name => {
-            const user = users.filter(user => userList[name].name === user.name())[0];
+            const user = findUser(name);
             if (!user) {
                 this.users.push(new UserModel(userList[name]));
                 return;
@@ -74,7 +77,7 @@ class AppModel {
         });
 
         users.forEach(user => {
-            const exists = names.some(name => name === user.name());
+            const exists = names.some(name => userList[name].name === user.name());
             if (exists) return;
             this.users.remove(user);
         });
