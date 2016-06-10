@@ -33,7 +33,8 @@ class AppModel {
         if (sort === Sort.Unsorted) return;
 
         const factor = this.sortDirection() === Sort.Ascending ? 1 : -1;
-        this.users.sort((left, right) => right.points() === left.points() ? 0 : (right.points() * factor) - (left.points() * factor))
+        const compareNames = (left: UserModel, right: UserModel) => left.name() > right.name() ? 1 : -1;
+        this.users.sort((left, right) => right.points() === left.points() ? (compareNames(left, right) * factor) : (right.points() * factor) - (left.points() * factor));
     }
     
     sortUsersRandomly = () => {
