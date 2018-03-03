@@ -1,0 +1,5 @@
+node_nodules
+*.js
+*.map
+.git
+.vscode
