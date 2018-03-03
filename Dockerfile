@@ -2,6 +2,7 @@ FROM mhart/alpine-node:8
 
 WORKDIR /code
 VOLUME /code/data
+EXPOSE 3000
 
 ADD . /code
 

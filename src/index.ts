@@ -33,7 +33,7 @@ server.get('/poll', (req, res) => {
 
 server.get('/ping', (req, res) => res.json({ ok: true }))
 
-server.listen(1716, () => console.log('Listening on port 1716'))
+server.listen(3000, () => console.log('Listening on port 3000'))
 
 setInterval(() => backup(), 60000)
 
