@@ -3,6 +3,8 @@ FROM mhart/alpine-node:8
 WORKDIR /code
 VOLUME /code/data
 
+ADD . /code
+
 ENV NODE_ENV=development \
   APP_ENV=prd
 
