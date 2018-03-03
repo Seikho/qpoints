@@ -1,3 +1,5 @@
+import 'fetch-polyfill'
+import * as ko from 'knockout'
 import { User } from '../src/points'
 
 enum Sort {
@@ -153,5 +155,6 @@ class UserModel {
 }
 
 ko.applyBindings(new AppModel())
+console.log('?')
 
 declare function fetch(...args): any

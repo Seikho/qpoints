@@ -1,2 +1,4 @@
 node_modules/
 users.json
+*.js
+*.map

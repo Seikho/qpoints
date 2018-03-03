@@ -9,6 +9,6 @@ ADD . /code
 ENV NODE_ENV=development \
   APP_ENV=prd
 
-RUN yarn && yarn build
+RUN yarn && yarn build && yarn bundle
 
 CMD ["node", "."]

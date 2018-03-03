@@ -6,16 +6,19 @@
 </head>
 
 <body>
-    <a href="https://github.com/seikho/qpoints" label="Sort"><img style="position: absolute; top: 0; right: 0; border: 0;" src="ribbon.png" alt="Fork me on GitHub"> </a>
+    <a href="https://github.com/seikho/qpoints" label="Sort">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="ribbon.png" alt="Fork me on GitHub"> </a>
     <div id="hardmode">
-    Hardmode
-    <input type="checkbox" data-bind="checked: hardmodeEnabled" tabindex="-1" />
+        Hardmode
+        <input type="checkbox" data-bind="checked: hardmodeEnabled" tabindex="-1" />
     </div>
     <table border="2">
-        
+
         <thead>
             <tr>
-                <th><a href="#" data-bind="click: changeSort">Name</a></th>
+                <th>
+                    <a href="#" data-bind="click: changeSort">Name</a>
+                </th>
                 <th>qPoints</th>
                 <th>
                     <button data-bind="click: addUser">+ User</button>
@@ -26,8 +29,12 @@
 
         <tbody data-bind="foreach: users">
             <tr>
-                <td><span data-bind="text: name"></td>
-                <td><span data-bind="text: points"></td>
+                <td>
+                    <span data-bind="text: name">
+                </td>
+                <td>
+                    <span data-bind="text: points">
+                </td>
                 <td>
                     <button title="Upseikho" data-bind="click: upvote, enable: isEnabled">+</button>
                     <button title="Downseikho" data-bind="click: downvote, enable: isEnabled">-</button>
@@ -35,10 +42,10 @@
         </tbody>
     </table>
     <br />
-    <b>Ping:</b> <span data-bind="text: pingTime"></span>ms
+    <b>Ping:</b>
+    <span data-bind="text: pingTime"></span>ms
 </body>
 
-<script src="/knockout.js"></script>
-<script src="/app.js"></script>
+<script src="/bundle.js"></script>
 
 </html>
